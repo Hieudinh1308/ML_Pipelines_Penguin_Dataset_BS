@@ -1,5 +1,3 @@
-# proto-file: tensorflow_metadata/proto/v0/schema.proto
-# proto-message: Schema
 feature {
   name: "body_mass_g"
   type: INT
@@ -112,4 +110,3 @@ string_domain {
   value: "Chinstrap"
   value: "Gentoo"
 }
-# generate_legacy_feature_spec: false
