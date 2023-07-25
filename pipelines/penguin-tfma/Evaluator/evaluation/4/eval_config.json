@@ -1,0 +1,46 @@
+{
+  "evalConfig": {
+    "modelSpecs": [
+      {
+        "labelKey": "species"
+      }
+    ],
+    "slicingSpecs": [
+      {},
+      {
+        "featureKeys": [
+          "species"
+        ]
+      }
+    ],
+    "metricsSpecs": [
+      {
+        "modelNames": [
+          ""
+        ],
+        "perSliceThresholds": {
+          "sparse_categorical_accuracy": {
+            "thresholds": [
+              {
+                "slicingSpecs": [
+                  {}
+                ],
+                "threshold": {
+                  "valueThreshold": {
+                    "lowerBound": 0.6
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "version": "0.44.0",
+  "dataLocation": "<user provided PCollection>",
+  "fileFormat": "<unknown>",
+  "modelLocations": {
+    "": "pipelines/penguin-tfma/Trainer/model/3/Format-Serving"
+  }
+}

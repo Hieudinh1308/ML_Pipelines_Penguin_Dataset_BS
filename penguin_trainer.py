@@ -1,12 +1,15 @@
 
+# Copied from https://www.tensorflow.org/tfx/tutorials/tfx/penguin_simple
+
 from typing import List
 from absl import logging
 import tensorflow as tf
 from tensorflow import keras
 from tensorflow_transform.tf_metadata import schema_utils
 
-from tfx import v1 as tfx
-from tfx_bsl.public import tfxio
+from tfx.components.trainer.executor import TrainerFnArgs
+from tfx.components.trainer.fn_args_utils import DataAccessor
+from tfx_bsl.tfxio import dataset_options
 from tensorflow_metadata.proto.v0 import schema_pb2
 
 _FEATURE_KEYS = [
@@ -30,7 +33,7 @@ _FEATURE_SPEC = {
 
 
 def _input_fn(file_pattern: List[str],
-              data_accessor: tfx.components.DataAccessor,
+              data_accessor: DataAccessor,
               schema: schema_pb2.Schema,
               batch_size: int = 200) -> tf.data.Dataset:
   """Generates features and label for training.
@@ -48,7 +51,7 @@ def _input_fn(file_pattern: List[str],
   """
   return data_accessor.tf_dataset_factory(
       file_pattern,
-      tfxio.TensorFlowDatasetOptions(
+      dataset_options.TensorFlowDatasetOptions(
           batch_size=batch_size, label_key=_LABEL_KEY),
       schema=schema).repeat()
 
@@ -59,7 +62,8 @@ def _build_keras_model() -> tf.keras.Model:
   Returns:
     A Keras Model.
   """
-
+  # The model below is built with Functional API, please refer to
+  # https://www.tensorflow.org/guide/keras/overview for all API options.
   inputs = [keras.layers.Input(shape=(1,), name=f) for f in _FEATURE_KEYS]
   d = keras.layers.concatenate(inputs)
   for _ in range(2):
@@ -77,7 +81,7 @@ def _build_keras_model() -> tf.keras.Model:
 
 
 # TFX Trainer will call this function.
-def run_fn(fn_args: tfx.components.FnArgs):
+def run_fn(fn_args: TrainerFnArgs):
   """Train the model based on given args.
 
   Args:

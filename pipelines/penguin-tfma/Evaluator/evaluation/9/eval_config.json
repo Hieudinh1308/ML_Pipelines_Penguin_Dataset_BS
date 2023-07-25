@@ -1,0 +1,58 @@
+{
+  "evalConfig": {
+    "modelSpecs": [
+      {
+        "name": "candidate",
+        "labelKey": "species"
+      },
+      {
+        "name": "baseline",
+        "labelKey": "species",
+        "isBaseline": true
+      }
+    ],
+    "slicingSpecs": [
+      {},
+      {
+        "featureKeys": [
+          "species"
+        ]
+      }
+    ],
+    "metricsSpecs": [
+      {
+        "modelNames": [
+          "candidate",
+          "baseline"
+        ],
+        "perSliceThresholds": {
+          "sparse_categorical_accuracy": {
+            "thresholds": [
+              {
+                "slicingSpecs": [
+                  {}
+                ],
+                "threshold": {
+                  "valueThreshold": {
+                    "lowerBound": 0.6
+                  },
+                  "changeThreshold": {
+                    "absolute": -1e-10,
+                    "direction": "HIGHER_IS_BETTER"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "version": "0.44.0",
+  "dataLocation": "<user provided PCollection>",
+  "fileFormat": "<unknown>",
+  "modelLocations": {
+    "candidate": "pipelines/penguin-tfma/Trainer/model/8/Format-Serving",
+    "baseline": "pipelines/penguin-tfma/Trainer/model/3/Format-Serving"
+  }
+}
